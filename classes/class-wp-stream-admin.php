@@ -935,7 +935,7 @@ class WP_Stream_Admin {
 		$expiry_date          = WP_Stream::$api->get_expiry_date();
 		$created_date         = WP_Stream::$api->get_created_date();
 		$site_uuid 						= WP_Stream::$api->site_uuid;
-		$activity_url					= WP_Stream::$api->api_url . "/domain/$site_uuid/activity/";
+		$activity_url					= WP_Stream::$api->api_url . "/domain/$site_uuid/";
 		?>
 		<div class="wrap">
 			<h2><?php echo esc_html( $page_title ) ?></h2>

@@ -43,7 +43,7 @@ class WP_Stream_API {
 	 *
 	 * @var string
 	 */
-	public $api_url = 'http://localhost:3000'; //'http://104.236.54.170'; //'https://api.wp-stream.com';  Now I set it below
+	public $api_url = 'http://104.236.54.170'; //'https://api.wp-stream.com';  Now I set it below
 
 	/**
 	 * Error messages
