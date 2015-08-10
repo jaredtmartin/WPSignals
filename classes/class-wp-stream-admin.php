@@ -50,15 +50,6 @@ class WP_Stream_Admin {
 		$home_url      = str_ireplace( array( 'http://', 'https://' ), '', home_url() );
 		$connect_nonce = wp_create_nonce( 'stream_connect_site-' . sanitize_key( $home_url ) );
 
-
-		if ( isset( $_POST['clear_key'] ) ) {
-			delete_option(WP_Stream_API::API_KEY_OPTION_KEY);
-			delete_option(WP_Stream_API::SITE_UUID_OPTION_KEY);
-			unset(WP_Stream::$api->api_key);
-			unset(WP_Stream::$api->site_uuid);
-		}
-
-
 		self::$connect_url = add_query_arg(
 			array(
 				'name'       => get_bloginfo('name'),
@@ -78,7 +69,7 @@ class WP_Stream_Admin {
 		}
 
 		// Disconnect
-		if ( self::ACCOUNT_PAGE_SLUG === wp_stream_filter_input( INPUT_GET, 'page' ) && '1' === wp_stream_filter_input( INPUT_GET, 'disconnect' ) ) {
+		if ( self::RECORDS_PAGE_SLUG === wp_stream_filter_input( INPUT_GET, 'page' ) && isset( $_POST['clear_key'] )) {
 			add_action( 'admin_init', array( __CLASS__, 'remove_api_authentication' ) );
 		}
 
@@ -793,21 +784,18 @@ class WP_Stream_Admin {
 		WP_Stream::$api->site_uuid = false;
 		WP_Stream::$api->api_key   = false;
 
-		if ( '1' !== wp_stream_filter_input( INPUT_GET, 'disconnect' ) ) {
-			return;
-		}
-
 		$redirect_url = add_query_arg(
 			array(
 				'page' => self::RECORDS_PAGE_SLUG,
 			),
 			admin_url( self::ADMIN_PARENT_PAGE )
 		);
-
-		wp_safe_redirect( $redirect_url );
+		// error_log("redirect_url: $redirect_url");
+		wp_safe_redirect( '/wp-admin/' );
 
 		exit;
 	}
+
 
 	public static function get_testimonials() {
 		$testimonials = get_site_transient( 'wp_stream_testimonials' );

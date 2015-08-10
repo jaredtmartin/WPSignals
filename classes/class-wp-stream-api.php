@@ -43,7 +43,7 @@ class WP_Stream_API {
 	 *
 	 * @var string
 	 */
-	public $api_url = 'http://104.236.54.170'; //'https://api.wp-stream.com';  Now I set it below
+	public $api_url = 'http://104.236.54.170';
 
 	/**
 	 * Error messages
@@ -81,13 +81,13 @@ class WP_Stream_API {
 
 
 		if (empty( $this->api_key )){
-			error_log("were in here");
-			error_log("WP_Stream_API::API_KEY_OPTION_KEY".WP_Stream_API::API_KEY_OPTION_KEY);
+			// error_log("were in here");
+			// error_log("WP_Stream_API::API_KEY_OPTION_KEY".WP_Stream_API::API_KEY_OPTION_KEY);
 			$new_key = $this->makeKey();
 			update_option( WP_Stream_API::API_KEY_OPTION_KEY,$new_key);
 			// update_option('wp_stream_api_key',$new_key);
 			$this->api_key    = get_option( self::API_KEY_OPTION_KEY, 0 );
-			error_log("new_key = $new_key");
+			// error_log("new_key = $new_key");
 			// WP_Stream_API->api_key = get_option( self::API_KEY_OPTION_KEY, 0 );
 		}
 
@@ -256,7 +256,7 @@ class WP_Stream_API {
 	public function get_created_date() {
 		$site        = WP_Stream::$api->get_site();
 		$date_format = get_option( 'date_format' );
-		error_log('date_format:'.get_option( 'date_format' ));
+		// error_log('date_format:'.get_option( 'date_format' ));
 		return isset( $site->created ) ? date_i18n( $date_format, strtotime( $site->created ) ) : __( 'N/A', 'stream' );
 	}
 
@@ -411,7 +411,7 @@ class WP_Stream_API {
 		if ( empty( $url ) || empty( $this->api_key ) ) {
 			return false;
 		}
-		error_log("url: $url");
+		// error_log("url: $url");
 		$defaults = array(
 			'headers'   => array(),
 			'method'    => 'GET',
@@ -441,15 +441,15 @@ class WP_Stream_API {
 				set_transient( $transient, $request, $expiration );
 			}
 		} else {
-			error_log("passing request to WP");
-			error_log("url: $url");
-			error_log("args: $args");
+			// error_log("passing request to WP");
+			// error_log("url: $url");
+			// error_log("args: $args");
 
-			error_log("method: ".$args['method']);
+			// error_log("method: ".$args['method']);
 			$request = wp_remote_request( $url, $args );
-			error_log("request: ".json_encode($request));
-			if ( ! is_wp_error( $request ) ) error_log("request body:".$request['body']);
-			if ( ! is_wp_error( $request ) ) error_log("request['response']" . json_encode($request['response']));
+			// error_log("request: ".json_encode($request));
+			// if ( ! is_wp_error( $request ) ) error_log("request body:".$request['body']);
+			// if ( ! is_wp_error( $request ) ) error_log("request['response']" . json_encode($request['response']));
 		}
 
 		remove_filter( 'http_api_transports', array( __CLASS__, 'http_api_transport_priority' ), 10 );
