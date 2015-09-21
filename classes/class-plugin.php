@@ -168,6 +168,7 @@ class Plugin {
 	public function init() {
 		$this->settings   = new Settings( $this );
 		$this->connectors = new Connectors( $this );
+		$this->api = new API( $this );
 	}
 
 	/**

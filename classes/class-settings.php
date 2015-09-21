@@ -12,7 +12,7 @@ class Settings {
 	 */
 	public $plugin;
 
-	public $api_url = "http://104.236.54.170/domains/connect";
+	public $api_url = "http://104.236.54.170";
 	/**
 	 * Settings key/identifier
 	 *
@@ -53,7 +53,7 @@ class Settings {
 		$this->options    = $this->get_options();
 
 		if(substr(home_url(), -13) == 'localhost.com'){
-			// $this->api_url = "http://localhost:3000/domains/connect";
+			$this->api_url = "http://localhost:3000";
 		}
 
 		// Register settings, and fields
@@ -502,7 +502,8 @@ class Settings {
 	}
 	public function get_connect_url(){
 		$home_url      = str_ireplace( array( 'http://', 'https://' ), '', home_url() );
-		return $this->api_url.'?api_key='.get_option('api_key').'&name='.get_bloginfo('name').'&back='.site_url().'&nonce='.wp_create_nonce( 'stream_connect_site-' . sanitize_key( $home_url ) );
+		error_log("$this->api_url".$this->api_url);
+		return $this->api_url.'/domains/connect?api_key='.get_option('api_key').'&name='.get_bloginfo('name').'&back='.site_url().'&nonce='.wp_create_nonce( 'stream_connect_site-' . sanitize_key( $home_url ) );
 	}
 	public function get_disconnect_url(){
 		return "/wp-admin/admin.php?page=wp_stream_settings&disconnect=true";

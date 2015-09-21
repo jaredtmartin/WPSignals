@@ -127,7 +127,11 @@ class DB {
 				$this->insert_meta( $record_id, $key, $val );
 			}
 		}
-
+		// API.logit($recordarr);
+		// API::logit('yeah');
+		// wp_stream_get_instance()->api->logit('yeah!!!');
+		wp_stream_get_instance()->api->new_records( $recordarr );
+		// $this->api->logit($recordarr);
 		/**
 		 * Fires after a record has been inserted
 		 *

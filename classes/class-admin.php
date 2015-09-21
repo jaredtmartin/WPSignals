@@ -461,7 +461,22 @@ class Admin {
 
 		return false;
 	}
+	function almost_sanitize_key( $key ) {
+		// Just like wordpress sanitize key except it leaves uppercase characters as-is
+    $raw_key = $key;
+    // $key = strtolower( $key );
+    $key = preg_replace( '/[^a-zA-Z0-9_\-]/', '', $key );
 
+    /**
+     * Filter a sanitized key string.
+     *
+     * @since 3.0.0
+     *
+     * @param string $key     Sanitized key.
+     * @param string $raw_key The key prior to sanitization.
+     */
+    return apply_filters( 'sanitize_key', $key, $raw_key );
+	}
 	/**
 	 * Add a specific body class to all Stream admin screens
 	 *
@@ -480,7 +495,7 @@ class Admin {
 				$stream_classes[] = sanitize_key( $_GET['page'] ); // input var okay
 			}
 			if ( isset($_GET['site_uuid'])){
-				update_option('site_uuid', sanitize_key( $_GET['site_uuid'] ));
+				update_option('site_uuid', $this->almost_sanitize_key( $_GET['site_uuid'] ));
 				error_log("Connected");
 			}
 			if ( isset($_GET['disconnect'])){
